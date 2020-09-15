@@ -1,0 +1,123 @@
+package com.example.sfx_hm.view.fragment;
+
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.sfx_hm.R;
+import com.example.sfx_hm.adapter.customProgrammingListViewAdapter;
+import com.example.sfx_hm.bean.TemperaturSetting;
+import com.example.sfx_hm.bean.TimeSetting;
+import com.example.sfx_hm.bean.customProgramming;
+import com.example.sfx_hm.bean.testMode;
+import com.example.sfx_hm.common.MyApplication;
+
+import org.xutils.ex.DbException;
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+
+import java.util.List;
+
+/**
+ * Time:2020/6/22
+ * Author:Administrator
+ */
+@ContentView(R.layout.fragment_custom_programming)
+public class CustomProgrammingFragment extends BaseFragment {
+    private List<customProgramming> customProgrammingList;
+    private customProgrammingListViewAdapter adapter;
+    @ViewInject(R.id.custom_programming_editText)
+    EditText custom_programming_et;
+    @ViewInject(R.id.custom_listView)
+    ListView listView;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showData();
+    }
+
+    private void showData() {
+        try {
+            customProgrammingList = MyApplication.db.findAll(customProgramming.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        adapter = new customProgrammingListViewAdapter(getContext(), customProgrammingList);
+        listView.setAdapter(adapter);
+    }
+
+    @Event(value = R.id.custom_programming_sureBtn)
+    private void onClick(View v) {
+        try {
+        switch (v.getId()) {
+                case R.id.custom_programming_sureBtn:
+                    String name = custom_programming_et.getText().toString();
+                    if (TextUtils.isEmpty(name)) {
+                        Toast.makeText(getContext(), "信息不能为空", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    List<testMode> test = MyApplication.db.findAll(testMode.class);
+                    List<TemperaturSetting> temperaturList = MyApplication.db.findAll(TemperaturSetting.class);
+                    List<TimeSetting> timeList = MyApplication.db.findAll(TimeSetting.class);
+                    String mode = null;
+                    TemperaturSetting temperatur = null;
+                    TimeSetting time = null;
+                    if (test.size() == 1){mode = test.get(0).getTestMode();}
+                    for (int i=0;i<temperaturList.size();i++) {
+                        temperatur = temperaturList.get(i);
+                        if(temperatur.isIsenable()){ break;}
+                        temperatur = null;
+                    }
+                    for (int i = 0;i<timeList.size();i++){
+                        time = timeList.get(i);
+                        if(time.isIsenable()){break;}
+                        time = null;
+                    }
+                    if (!(mode != null && temperatur != null && time != null)){
+                        Toast.makeText(getContext(), "其它参数未输入或未启用", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    customProgramming customProgramming = new customProgramming(name);
+                    customProgramming.setTestMode(mode);
+                    customProgramming.setTemperatur(temperatur.getTemperatur());
+                    customProgramming.setTime(time.getTime());
+                    MyApplication.db.save(customProgramming);
+                    custom_programming_et.setText("");//添加完自动清空输入框
+                    if (customProgrammingList != null){
+                        customProgrammingList.clear();
+                        List<customProgramming> customList = MyApplication.db.findAll(customProgramming.class);
+                        customProgrammingList.addAll(customList);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        custom_programming_et.setText("");
+                        showData();
+                    }
+                    Toast.makeText(getContext(), "添加成功", Toast.LENGTH_SHORT).show();
+                    break;
+        }
+        } catch (DbException e) {
+            e.printStackTrace();
+            if (e.getMessage().contains("code 2067 SQLITE_CONSTRAINT_UNIQUE")) {
+                Toast.makeText(getContext(), "添加失败，不能添加重复的数据", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(getContext(), "添加失败，原因是：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+}

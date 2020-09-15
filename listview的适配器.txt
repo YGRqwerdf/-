@@ -1,0 +1,135 @@
+package com.example.sfx_hm.view.fragment;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.sfx_hm.R;
+import com.example.sfx_hm.bean.userNameSetting;
+import com.example.sfx_hm.common.MyApplication;
+import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
+
+import org.xutils.ex.DbException;
+import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
+
+import java.util.List;
+
+/**
+ * Time:2020/9/15
+ * Author:Administrator
+ */
+public class userNameSettingListViewAdapter extends BaseAdapter {
+    private Context context;
+    private List<userNameSetting> userNameSettingList;
+
+    /**
+     * 外部调用此构造函数
+     * @param context
+     * @param userNameSettingList
+     */
+    public userNameSettingListViewAdapter(Context context, List<userNameSetting> userNameSettingList) {
+        this.context = context;
+        this.userNameSettingList = userNameSettingList;
+    }
+
+    @Override
+    public int getCount() {
+        return userNameSettingList!=null?userNameSettingList.size():0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return userNameSettingList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final userNameSetting userNameSetting = userNameSettingList.get(position);
+        ViewHolder viewHolder;
+        if (convertView == null){
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_user_name_setting_lisetview,parent,false);
+            viewHolder = new ViewHolder();
+            x.view().inject(viewHolder,convertView);//xutils框架方法
+            convertView.setTag(viewHolder);//setTag方便复用
+        }else {
+            viewHolder = (ViewHolder)convertView.getTag();//getTag复用
+        }
+        //判断是否启用，如果启用，按钮颜色为蓝色，否则为灰色
+        if (userNameSetting.isEnable()){
+            viewHolder.enable_btn.setBackgroundColor(Color.parseColor("#34c3a7"));
+        }else {
+            viewHolder.enable_btn.setBackgroundColor(Color.GRAY);
+        }
+        //设置列表项被单击事件监听
+        final ViewHolder finalViewHolder = viewHolder;
+        //删除按钮
+        viewHolder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //删除相应数据
+                userNameSettingList.remove(position);
+                //重新绑定数据
+                notifyDataSetChanged();
+                try {
+                    MyApplication.db.deleteById(userNameSetting.class, userNameSetting.getID());//根据唯一标识：Id删除
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                finalViewHolder.swipeMenuLayout.quickClose();//关闭侧滑菜单
+            }
+        });
+        //启用按钮
+        viewHolder.enable_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    //把所有数据设置为未启用，保存数据库
+                    for (int i = 0; i < userNameSettingList.size(); i++) {
+                        userNameSettingList.get(i).setEnable(false);
+                        MyApplication.db.update(userNameSettingList.get(i),"isEnable");
+                    }
+                    //设置点击启用的那条数据为启用状态，保存数据库
+                    userNameSetting.setEnable(true);
+                    MyApplication.db.update(userNameSetting,"isEnable");
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                finalViewHolder.swipeMenuLayout.quickClose();//关闭侧滑菜单
+                notifyDataSetChanged();//更新界面
+            }
+        });
+        //判断是否启用，启用字体颜色为蓝色，未启用字体颜色为灰色
+        if(userNameSetting.isEnable()){
+            viewHolder.userNameSetting_textView.setTextColor(Color.BLUE);
+        }else {
+            viewHolder.userNameSetting_textView.setTextColor(Color.GRAY);
+        }
+        //获取名称，并显示
+        viewHolder.userNameSetting_textView.setText(userNameSetting.getUserName());
+        return convertView;
+    }
+    /**
+    * 绑定item页面的控件
+    * */
+    public static class ViewHolder {
+        @ViewInject(R.id.userNameSetting_swipeMenuLayout)
+        private SwipeMenuLayout swipeMenuLayout;
+        @ViewInject(R.id.userNameSetting_textView)
+        TextView userNameSetting_textView;
+        @ViewInject(R.id.delete_btn3)
+        Button btn;
+        @ViewInject(R.id.enable_btn3)
+        Button enable_btn;
+    }
+}

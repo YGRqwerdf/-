@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.36"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:id="@+id/sampleName_linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_info_linearLayout_height"
+            android:layout_marginStart="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/textview_background"
+                android:gravity="center"
+                android:text="用户名称："
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_18" />
+
+            <EditText
+                android:id="@+id/userName_editText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/space_5"
+                android:hint="@string/fragment_editView_notice"
+                android:maxLines="1"
+                android:paddingStart="@dimen/space_5"
+                android:singleLine="true"
+                android:textColor="@color/text_black_color"
+                android:textColorHint="@color/text_hint_color"
+                android:textSize="@dimen/text_size_18" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/userName_sureBtn"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/space_20"
+            android:background="@drawable/button_background"
+            android:text="@string/fragment_sure"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10"
+        android:background="@color/fragment_background_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.64"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_5"
+            android:gravity="center"
+            android:text="@string/user_name_list"
+            android:textColor="@color/app_main_color"
+            android:textSize="@dimen/text_size_20" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/space_10"
+                android:text="@string/user_name"
+                android:textSize="@dimen/text_size_20" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_bg" />
+        <!--下半部分-->
+        <ListView
+            android:id="@+id/userName_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:paddingStart="@dimen/space_20"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+</LinearLayout>

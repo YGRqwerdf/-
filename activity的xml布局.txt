@@ -1,0 +1,42 @@
+xml version=1.0 encoding=utf-8
+LinearLayout xmlnsandroid=httpschemas.android.comapkresandroid
+    androidlayout_width=match_parent
+    androidlayout_height=match_parent
+    androidbackground=@colorfragment_background_color
+    androidorientation=vertical
+    !--标题栏--
+    TextView
+        androidlayout_width=match_parent
+        androidlayout_height=@dimentitle_height
+        androidbackground=@colorapp_main_blue_color
+        androidgravity=center
+        androidtext=@stringapp_name
+        androidtextColor=@androidcolorwhite
+        androidtextSize=@dimentext_size_20 
+
+    LinearLayout
+        androidlayout_width=match_parent
+        androidlayout_height=match_parent
+        androidlayout_marginTop=@dimenspace_10
+        androidbaselineAligned=false
+        !--左边选择列表--
+        ListView
+            androidid=@+iduser_info_listView_left
+            androidlayout_width=0dp
+            androidlayout_height=match_parent
+            androidlayout_marginTop=@dimenspace_10
+            androidlayout_weight=0.7
+            androidbackground=@drawablesetting_selector
+            androidlistSelector=#E7F4FF
+            androidtextSize=@dimentext_size_20 
+        !--右边信息模块--
+        FrameLayout
+            androidid=@+iduser_info_frameLayout_container
+            androidlayout_width=0dp
+            androidlayout_height=match_parent
+            androidlayout_marginStart=@dimenspace_10
+            androidlayout_marginTop=@dimenspace_10
+            androidlayout_weight=2
+            androidorientation=vertical 
+    LinearLayout
+LinearLayout

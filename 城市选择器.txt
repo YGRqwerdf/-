@@ -1,0 +1,30 @@
+点击textview弹出城市选择器，并将选择的数据添加到textview中
+//省市级三级联动
+    implementation 'liji.library.dev:citypickerview:5.2.2'
+
+
+
+private void showPickView() {
+        CityConfig cityConfig = new CityConfig.Builder().build();
+        cityConfig.setCancelTextSize(28);
+        cityConfig.setConfirmTextSize(28);
+        cityConfig.setTitleTextSize(28);
+        cityConfig.setCustomItemLayout(R.layout.item_city);//自定义的item布局
+        cityConfig.setCustomItemTextViewId(R.id.item_city_name_tv);
+        cityPickerView.setConfig(cityConfig);
+        cityPickerView.init(getContext());
+        cityPickerView.setOnCityItemClickListener(new OnCityItemClickListener() {
+            @Override
+            public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
+                super.onSelected(province, city, district);
+                String text = province.getName() + "/" + city.getName()
+                        + "/" + district.getName();
+                sampleFrom_editText.setText(text);
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
+cityPickerView.showCityPicker();
+    }

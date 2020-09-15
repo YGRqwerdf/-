@@ -1,0 +1,80 @@
+package com.example.sfx_hm.view;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.sfx_hm.R;
+import com.example.sfx_hm.view.fragment.InspectorFragment;
+import com.example.sfx_hm.view.fragment.UserAddressFragment;
+import com.example.sfx_hm.view.fragment.UserNameFragment;
+
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+  Time2020622
+  AuthorAdministrator
+ 
+@ContentView(R.layout.activity_user_info)
+public class UserInfoActivity extends BaseActivity {
+    @ViewInject(R.id.user_info_listView_left)
+    ListView listView;
+    private Fragment[] fragments = {new UserNameFragment(), new UserAddressFragment(), new InspectorFragment()};
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setLeftListView();
+    }
+
+    private void setLeftListView() {
+        int[] imgs = {R.mipmap.sample_name, R.mipmap.sample_from, R.mipmap.test_mode,
+                R.mipmap.test_setting, R.mipmap.custom_programming};
+        String[] names = {用户名称, 用户地址,
+                检测人员};
+        String[] description = {用户名称相关设置, 用户地址相关设置, 检测人员相关设置};
+        ListMapString, Object data = new ArrayList();
+        for (int i = 0; i  names.length; i++) {
+            MapString, Object map = new HashMap();
+            map.put(imageView, imgs[i]);
+            map.put(name, names[i]);
+            map.put(description, description[i]);
+            data.add(map);
+        }
+        String[] from = {imageView, name, description};
+        int resource = R.layout.item_user_info_left_listview;
+        int[] adapter_to = {R.id.user_info_listView_left_ImageView, R.id.user_info_listView_left_textView,
+                R.id.user_info_listView_left_description};
+        listView.setAdapter(new SimpleAdapter(UserInfoActivity.this, data, resource, from, adapter_to));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                switchFragment(R.id.user_info_frameLayout_container, fragments[position]).commit();
+                listView.setSelected(false);
+                view.setSelected(true);
+            }
+        });
+        默认选择左边listView的第0项
+        switchFragment(R.id.user_info_frameLayout_container, fragments[0]).commit();
+        设置被选中项的背景色
+        listView.setSelection(0);
+        listView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listView.requestFocusFromTouch();获取焦点
+                listView.setSelection(0);
+            }
+        }, 100);
+    }
+}

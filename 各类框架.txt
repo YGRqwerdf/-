@@ -1,0 +1,22 @@
+    /*xUtils框架 */
+    implementation 'org.xutils:xutils:3.8.8'
+    //透明状态栏
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+    //折线图
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
+    //串口通信
+    implementation 'com.github.F1ReKing:Android-SerialPort:1.5.1'
+    //二维码 QRCodeUtil依赖它
+    implementation 'com.google.zxing:core:3.4.0'
+    //省市级三级联动
+    implementation 'liji.library.dev:citypickerview:5.2.2'
+    //阴影
+    implementation 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
+    //excel
+    implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
+    //仿ios开关
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    //滑动选项
+    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
+    //约束布局
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

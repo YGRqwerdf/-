@@ -1,0 +1,97 @@
+package com.example.sfx_hm.view.fragment;
+
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.sfx_hm.R;
+import com.example.sfx_hm.bean.userNameSetting;
+import com.example.sfx_hm.common.MyApplication;
+
+import org.xutils.ex.DbException;
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+
+import java.util.List;
+
+/**
+ * Time:2020/9/15
+ * Author:Administrator
+ */
+@ContentView(R.layout.fragment_user_name)
+public class UserNameFragment extends BaseFragment {
+    private List<userNameSetting> userNameSettingList;
+    private userNameSettingListViewAdapter adapter;
+    @ViewInject(R.id.userName_editText)
+    EditText userName_et;
+    @ViewInject(R.id.userName_listView)
+    ListView listView;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        showData();
+    }
+
+    @Event(value = {R.id.userName_sureBtn})
+    private void onClick(View v){
+        switch (v.getId()){
+            case R.id.userName_sureBtn:
+                String name = userName_et.getText().toString();
+                if (TextUtils.isEmpty(name)){
+                    Toast.makeText(getContext(), "信息不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                userNameSetting userNameSetting = new userNameSetting(name);
+                try {
+                    MyApplication.db.save(userNameSetting);
+                    userName_et.setText("");
+                    if (userNameSettingList != null){
+                        userNameSettingList.clear();
+                        List<userNameSetting> list = MyApplication.db.findAll(userNameSetting.class) ;
+                        userNameSettingList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                    }else {
+                        userName_et.setText("");
+                        showData();
+                    }
+                } catch (DbException e) {
+                    e.printStackTrace();
+                    if (e.getMessage().contains("code 2067 SQLITE_CONSTRAINT_UNIQUE"))
+                    {
+                        Toast.makeText(getContext(), "添加失败，不能添加重复的数据", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Log.i("tag", e.getMessage());
+                    Toast.makeText(getContext(), "添加失败，原因是：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    private void showData() {
+        try {
+            userNameSettingList = MyApplication.db.findAll(userNameSetting.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        adapter = new userNameSettingListViewAdapter(getContext(), userNameSettingList);
+        listView.setAdapter(adapter);
+    }
+}
