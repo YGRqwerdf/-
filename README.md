@@ -1,4 +1,4 @@
-# -Android studio项目导入build.gradle文件不是导入文件夹
+Android studio项目导入build.gradle文件不是导入文件夹
 
 view的setSelected()方法设定布尔值设置控件是否被选中，在控件的background中设置@drawable/xxxx（xml文件）  更改控件是否选择时的颜色
 style目录下的color文件定义用到的颜色，比在layout下定义好。
