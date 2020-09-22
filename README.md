@@ -16,3 +16,7 @@ switch中break和return的区别，break是退出一层，return退出函数
 多个RadioButton不用RadioGroup实现单选  先监听点击事件，写setRadioButtonCheck(v.getId())类，使用SparseArray数组。实现单选，看微信收藏笔记radiobutton
 
 implementation 'me.jessyan:autosize:1.1.2' 屏幕适配（AndroidAutoSize）
+
+获取ViewGroup------MainActivity activity;                               
+返回View:       activity.getWindow().getDecorView()                  
+返回ViewGroup： (ViewGroup)activity.getWindow().getDecorView()
