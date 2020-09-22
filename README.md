@@ -20,3 +20,7 @@ implementation 'me.jessyan:autosize:1.1.2' 屏幕适配（AndroidAutoSize）
 获取ViewGroup------MainActivity activity;                               
 返回View:       activity.getWindow().getDecorView()                  
 返回ViewGroup： (ViewGroup)activity.getWindow().getDecorView()
+
+2018 I/O大会Google强推androidx彻底弃用了Android.support.V7/V4  不过只有软件包和 Maven 工件名称发生了变化；类、方法和字段名称没有改变。
+
+弹出式菜单 PopupMenu    弹出式窗口 PopupWindow
