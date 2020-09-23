@@ -9,7 +9,7 @@ https://www.jianshu.com/p/9f22911ea630   串口工具文档
 
 https://www.runoob.com/  菜鸟教程：各语言中文api
 
-dmrfcoder F1ReKing 大佬
+dmrfcoder *github用户       F1ReKing  *Android-SerialPort串口调试库开发者
 
 switch中break和return的区别，break是退出一层，return退出函数
 
