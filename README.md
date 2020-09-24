@@ -32,3 +32,5 @@ implementation 'me.jessyan:autosize:1.1.2' 屏幕适配（AndroidAutoSize）
 （5）onStop：stop表示停止，此时Activity已经不可见了，但是Activity对象还在内存中，没有被销毁。这个阶段的主要工作也是做一些资源的回收工作。
 （6）onDestroy：destroy表示毁灭，这个阶段Activity被销毁，不可见，我们可以又将还没释放的资源释放，以及进行一些回收工作。
 （7）onRestart：restart表示重新开始，Activity在这时可见，当用户按Home键切换到桌面后切回来或者从后一个Activity切回前一个Activity就会触发这个方法。这里一般不做什么操作。
+
+Java与数据库中的datetime Timestamp以及String之间的转换https://blog.csdn.net/weixin_43959046/article/details/90322346
