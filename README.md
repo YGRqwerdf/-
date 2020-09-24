@@ -23,4 +23,12 @@ implementation 'me.jessyan:autosize:1.1.2' 屏幕适配（AndroidAutoSize）
 
 2018 I/O大会Google强推androidx彻底弃用了Android.support.V7/V4  不过只有软件包和 Maven 工件名称发生了变化；类、方法和字段名称没有改变。
 
-弹出式菜单 PopupMenu    弹出式窗口 PopupWindow
+弹出式菜单 PopupMenu    弹出式窗口 PopupWindow  Toolbar可以自定义导航栏
+
+（1）onCreate:create表示创建，这是Activity生命周期的第一个方法，也是我们在android开发中接触的最多的生命周期方法。它本身的作用是进行Activity的一些初始化工作，比如使用setContentView加载布局，对一些控件和变量进行初始化等。但也有很多人将很多与初始化无关的代码放在这，其实这是不规范的。此时Activity还在后台，不可见。所以动画不应该在这里初始化，因为看不到
+（2）onStart:start表示启动，这是Activity生命周期的第二个方法。此时Activity已经可见了，但是还没出现在前台，我们还看不到，无法与Activity交互。其实将Activity的初始化工作放在这也没有什么问题，放在onCreate中是由于官方推荐的以及我们开发的习惯。
+（3）onResume:resume表示继续、重新开始，这名字和它的职责也相同。此时Activity经过前两个阶段的初始化已经蓄势待发。Activity在这个阶段已经出现在前台并且可见了。这个阶段可以打开独占设备
+（4）onPause:pause表示暂停，当Activity要跳到另一个Activity或应用正常退出时都会执行这个方法。此时Activity在前台并可见，我们可以进行一些轻量级的存储数据和去初始化的工作，不能太耗时，因为在跳转Activity时只有当一个Activity执行完了onPause方法后另一个Activity才会启动，而且android中指定如果onPause在500ms即0.5秒内没有执行完毕的话就会强制关闭Activity。从生命周期图中发现可以在这快速重启，但这种情况其实很罕见，比如用户切到下一个Activity的途中按back键快速得切回来。
+（5）onStop：stop表示停止，此时Activity已经不可见了，但是Activity对象还在内存中，没有被销毁。这个阶段的主要工作也是做一些资源的回收工作。
+（6）onDestroy：destroy表示毁灭，这个阶段Activity被销毁，不可见，我们可以又将还没释放的资源释放，以及进行一些回收工作。
+（7）onRestart：restart表示重新开始，Activity在这时可见，当用户按Home键切换到桌面后切回来或者从后一个Activity切回前一个Activity就会触发这个方法。这里一般不做什么操作。
