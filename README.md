@@ -36,3 +36,5 @@ implementation 'me.jessyan:autosize:1.1.2' 屏幕适配（AndroidAutoSize）
 Java与数据库中的datetime Timestamp以及String之间的转换https://blog.csdn.net/weixin_43959046/article/details/90322346
 
 Android studio满屏报错Duplicate class com.google.zxing.BarcodeFormat found in modules jetified-core-3.4.0.jar      这是应为重复导入jar包导致的，把implementation改为compileOnly就好了（改的是父包，不是重写/继承父包的那个包）
+
+notes有配置as文件目录的方法，减少c盘占用。
