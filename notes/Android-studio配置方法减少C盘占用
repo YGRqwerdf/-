@@ -1,0 +1,74 @@
+Android Studio设置，减少对C盘空间的占用
+
+叶大师2018 2018-09-26 22:42:48  7368  收藏 17
+分类专栏： Android开发 文章标签： Android Studio设置
+版权
+       现在Android开发都使用Android Studio这个IDE。默认安装的AndroidStudio会在C:\Users\用户名\ .xxx 缓存一些数据，主要有四个文件夹，分别是：
+
+.android 这个文件夹是Android SDK生成的AVD（Android Virtual Device Manager）即模拟器存放路径
+.AndroidStudio 配置、插件缓存文件夹、最近打开的项目
+.gradle 这其中存储的是本地的gradle全局配置文件 ，但是在每次更新gradle后，这个文件都会增大（可以配置离线gradle）
+.m2 maven仓库下载的库文件保存在这里，使用的所有的maven仓库都会先缓存到这里，然后再添加到你的项目中进行使用。如果你用的插件越多这个文件夹将会持续增大。
+ 当然，如果你的C盘空间足够大，那可以置之不理。如果对C盘空间比较敏感的话，就得好好设置一下Andoid Studio了。前提是，已经把jdk、android sdk下载配置好了。
+
+1、下载Android Studio
+
+这里下载的是AS 3.0免安装版。去Android Studio中文社区（官网）下载即可。下载解压到非C盘的目录中，别急着启动。
+
+2、第一次启动AS前，为了避免重新下载新版本的SDK，需要做如下操作：
+
+     AS启动前，打开安装目录，请先将bin目录的idea.properties文件中增加一行：disable.android.first.run=true就行了，避免第一次打开AS时自动重新下载SDK。
+
+3、修改.android路径
+
+.android是ADT的路径，由Android SDK配置模拟器生成的。
+
+通常我们配置Android SDK路径的时候，都会配置一个ANDROID_HOME的环境变量，来指向Android sdk的安装目录。而想要自定义ADT的路径，得添加ANDROID_SDK_HOME环境变量，来配置.android的路径，该路径未来将保留ADT配置的文件。
+
+4、修改默认的配置、插件缓存文件夹路径
+
+配置文件idea.properties（位于AS安装名目录\bin）中，默认设置了AS工具的config、system、plugins等的存储目录，默认内容如下：
+
+# idea.config.path=${user.home}/.AndroidStudio/config
+# idea.system.path=${user.home}/.AndroidStudio/system
+# idea.plugins.path=${idea.config.path}/plugins
+${user.home} 对应于系统当前用户目录: C:\users\XXXX。
+
+下面修改其存储路径：
+
+idea.config.path=E:/Users/cache/.AndroidStudio/config
+idea.system.path=E:/Users/cache/.AndroidStudio/system
+idea.plugins.path=${idea.system.path}/plugins
+在idea.properties的第一行插入上面这个配置，把AS的配置路径改为自定义的路径。注意，idea.plugins.path也需要修改，否则插件下载后可能无法安装。
+
+       此时如果插件知识单独的jar文件，那么没有问题，但如果下载的插件是zip文件，那就需要手动解压文件，重启AS后，插件才能正常显示。
+
+5、修改.gradle缓存文件的路径配置
+
+在idea.properties配置文件中添加一行：
+
+gradle.user.home=E:/Users/cache/.gradle
+
+
+ 
+
+ 
+
+ 
+
+6、修改.m2路径
+
+在Settings -> Apprearance & Behavior ->Path Variables添加MAVEN_REPOSITORY变量
+
+
+
+ 
+
+7、android studio 无法下载插件时，可设置：
+
+File->Settings->Apparence & Behavior->System Settings->Updates->use secure connnection 勾去掉
+
+ 
+ 
+ 
+ 地址：https://blog.csdn.net/ganmaotong/article/details/80980199
