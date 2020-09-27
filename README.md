@@ -40,3 +40,10 @@ Android studio满屏报错Duplicate class com.google.zxing.BarcodeFormat found i
 notes有配置as文件目录的方法，减少c盘占用。
 
 Navigation  导航
+
+简书：   https://www.jianshu.com/p/f4b5b1010a41
+ldpi：240x320
+mdpi：320x480
+hdpi：480x800、480x854
+xhdpi：至少960*720  720p
+xxhdpi：1920×1080  1080p
