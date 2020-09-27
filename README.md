@@ -51,5 +51,5 @@ xxhdpi：1920×1080  1080p
 xutils3绑定控件，控件监听，绑定函数....只能使用private！！！使用其它修饰符不起作用。
 
 startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS)); //打开蓝牙系统设置界面
-startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)); //打开wifi网络设置界面
-startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));//打开时间设置界面
+startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)); //打开wifi网络系统设置界面
+startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));//打开时间系统设置界面
