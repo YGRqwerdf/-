@@ -59,3 +59,7 @@ startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));//打开时间系统设
 List<E>数组在用之前需要分配空间， list = new ArrayList<>();
 
 判断字符串是否完全相同用equals，判断字符串是否包含在里面用contains，使用contains时两个字符串不完全相同但是有一部分相同的时候会返回true，谨慎使用。
+
+使用adapter.notifyDataSetChanged()时，必须保证传进 Adapter的数据 List是同一个List
+而不能是其他对象，否则无法更新 listview。
+        即，你可以调用 List 的 add()， remove()， clear()，addAll() 等方法，这种情况下，List 指向的始终是你最开始 new 出来的 ArrayList ，然后调用 adapter.notifyDataSetChanged() 方法，可以更新 ListView；但是如果你重新 new 了一个 ArrayList（重新申请了堆内存），那么这时候，List 就指向了另外一个 ArrayLIst，这时调用 adapter.notifyDataSetChanged() 方法，就无法刷新 listview 了。
