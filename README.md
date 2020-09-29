@@ -58,4 +58,4 @@ startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));//打开时间系统设
 
 List<E>数组在用之前需要分配空间， list = new ArrayList<>();
 
-判断字符串是否完全相同用equals，判断字符串是否包含在里面用contions，使用contions时两个字符串不完全相同但是有一部分相同的时候会返回true，谨慎使用。
+判断字符串是否完全相同用equals，判断字符串是否包含在里面用contains，使用contains时两个字符串不完全相同但是有一部分相同的时候会返回true，谨慎使用。
