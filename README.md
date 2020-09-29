@@ -57,3 +57,5 @@ startActivity(new Intent(Settings.ACTION_DATE_SETTINGS));//打开时间系统设
 && b：a和b同时为true 才返回 true， 否则返回false；            a || b：a或b任意一个为true 就返回true ， 否则返回false     判断多个输入框不为空要用||，只要有一个为空就是true，回进入if语句，用&&会导致有一个不是空，返回false，进不去if。或者把所有的&&框起来进行取反   ！
 
 List<E>数组在用之前需要分配空间， list = new ArrayList<>();
+
+判断字符串是否完全相同用equals，判断字符串是否包含在里面用contions，使用contions时两个字符串不完全相同但是有一部分相同的时候会返回true，谨慎使用。
