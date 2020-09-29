@@ -67,3 +67,5 @@ List<E>数组在用之前需要分配空间， list = new ArrayList<>();
         即，你可以调用 List 的 add()， remove()， clear()，addAll() 等方法，这种情况下，List 指向的始终是你最开始 new 出来的 ArrayList ，然后调用 adapter.notifyDataSetChanged() 方法，可以更新 ListView；但是如果你重新 new 了一个 ArrayList（重新申请了堆内存），那么这时候，List 就指向了另外一个 ArrayLIst，这时调用 adapter.notifyDataSetChanged() 方法，就无法刷新 listview 了。
 
 如果list的item里面包括button或者checkbox等控件，默认情况下listitem会失去焦点，导致无法响应item的事件，最常用的解决办法是在listitem的布局文件中设置descendantFocusability属性。自定义item在自定义的布局xml文件中设置然后监听那个layout或者其它的控件，在getview里面设置监听会自动获取点击的item非常好用。
+
+自定义listview的item的时候可以自定义一个内部类public static class ViewHolder {}。初始化item的控件，convertView设置setTag(viewHolder);在开始的时候判断convertView是否为空不为空getTag（）复用上一个item非常方便，具体搜索listViw viewHolder教程很多优化listview加载。
