@@ -69,3 +69,5 @@ List<E>数组在用之前需要分配空间， list = new ArrayList<>();
 如果list的item里面包括button或者checkbox等控件，默认情况下listitem会失去焦点，导致无法响应item的事件，最常用的解决办法是在listitem的布局文件中设置descendantFocusability属性。自定义item在自定义的布局xml文件中设置然后监听那个layout或者其它的控件，在getview里面设置监听会自动获取点击的item非常好用。
 
 自定义listview的item的时候可以自定义一个内部类public static class ViewHolder {}。初始化item的控件，convertView设置setTag(viewHolder);在开始的时候判断convertView是否为空不为空getTag（）复用上一个item非常方便，具体搜索listViw viewHolder教程很多优化listview加载。
+
+点击adapter的item显示一个dialogfragment，可以使用fragment和adapter通信来完成，具体方法在notes两者通信中。csdn地址  https://blog.csdn.net/Jordas_Lee/article/details/103287252?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param
