@@ -1,0 +1,40 @@
+activity/fragment与adapter之间通信
+我们在使用各种需要adapter的控件的时候，不免需要在activity/fragment和adapter之间传递数据或者调用某个方法。一般基本都是需要在adapter里调用activity里的某个方法，如果是需要activity调用adapter里方法直接用adapter的对象调用就行。
+这里提供的方法是写个回调的接口，不推荐将activity的引用传入adapter，如果adapter有耗时操作可能会导致内存泄漏。
+比如说我现在有一个activity里的一个recyclerview的adapter，recyclerview的每一个item里都有一个textview，我需要在textview的内容是“你好”的时候将这个textview传给activity进行进一步的操作。
+1.首先在adapter里新建个接口：
+
+public interface Interface{
+	void onWork(View view);//在这里可以自定义想要实现的方法，一般是传入adapter里的变量供activity使用。
+}
+1
+2
+3
+2.然后在adapter里加个成员变量：
+
+private Interface mListener;
+1
+3.然后在adapter的构造方法里传入这个接口的实例，如果你的构造方法已经有很多使用不方便改可以加个构造方法：
+
+Interface(Interface mListener){
+	this.mListener = mListener;
+}
+1
+2
+3
+4.然后在adapter里适当的地方用mListener调用接口里的方法，本例中应该是在onBindViewHolder里调用如下代码：
+
+	if(TextUtil.equals("你好",textview.getText.toString()){
+		mListener.onWork(textview);
+	}
+1
+2
+3
+4.去activity里在new adapter的地方改成如下代码：
+
+Adapter adapter = new Adapter(new Adapter.Interface{//监听adapter的回调方法
+			@Override
+            public void onWork(View view) {
+                fun(view);//在这里处理从adapter获取到的变量即可。
+            }
+})
