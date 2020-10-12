@@ -71,3 +71,7 @@ List<E>数组在用之前需要分配空间， list = new ArrayList<>();
 自定义listview的item的时候可以自定义一个内部类public static class ViewHolder {}。初始化item的控件，convertView设置setTag(viewHolder);在开始的时候判断convertView是否为空不为空getTag（）复用上一个item非常方便，具体搜索listViw viewHolder教程很多优化listview加载。
 
 点击adapter的item显示一个dialogfragment，可以使用fragment和adapter通信来完成，具体方法在notes两者通信中。csdn地址  https://blog.csdn.net/Jordas_Lee/article/details/103287252?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param
+
+xutils网络请求
+  params.setAsJsonContent(true);//设置请求格式为json
+  params.setBodyContent(json);//请求的参数，转换为字符串的json数据
