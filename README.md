@@ -75,3 +75,5 @@ List<E>数组在用之前需要分配空间， list = new ArrayList<>();
 xutils网络请求
   params.setAsJsonContent(true);//设置请求格式为json
   params.setBodyContent(json);//请求的参数，转换为字符串的json数据
+  
+使用Dialog的子类DialogFragment时，使用的contentView是Android自带样式和大小的Layout，用户自定义的view被加到mDecor上，所以在show()之前设置xml的大小是无效的，最后还是会在show中被覆盖成系统自带的格式，只有在show后面改变布局属性才会生效,DialogFragment在onCreate()和onCreateView()中设置布局大小无效，因为onCreate()和onCreateView()生命周期在onStart()生命周期之前，此时还未调用Dialog.show()方法   地址https://blog.csdn.net/u013309870/article/details/85162630
